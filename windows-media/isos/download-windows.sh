@@ -95,7 +95,21 @@ scurl_file() {
     tls_version="$2"
     url="$3"
 
-    until curl --output "$out_file" --"tlsv$tls_version" --proto =https -- "$url"; do
+    # Map the TLS version to the corresponding `--secure-protocol` option in wget
+    case "$tls_version" in
+        1.2)
+            secure_protocol="TLSv1_2"
+            ;;
+        1.3)
+            secure_protocol="TLSv1_3"
+            ;;
+        *)
+            echo -e "${RED}[!]${NC} Unsupported TLS version: $tls_version. Exiting..." >&2
+            exit 1
+            ;;
+    esac
+
+    until wget --output-document="$out_file" --secure-protocol="$secure_protocol" --https-only "$url"; do
         echo -e "${RED}[!]${NC} Failed to download Windows! Is there an Internet connection? Retrying in 10 seconds..." >&2
         sleep 10
     done
