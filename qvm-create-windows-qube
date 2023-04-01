@@ -103,6 +103,10 @@ while true; do
             iso="$2"
             shift 2
             ;;
+        --resources-qube)
+            resources_qube="$2"
+            shift 2
+            ;;
         -a | --answer-file)
             answer_file="$2"
             shift 2
@@ -181,7 +185,13 @@ if [ "$netvm" ]; then
     fi
 fi
 
-resources_qube="windows-mgmt"
+# Resources qube
+if ! [ "$resources_qube" ]; then
+    echo -e "${RED}[!]${NC} Resource qube not specified"
+else
+  resources_qube="windows-mgmt"
+fi
+
 resources_dir="/home/user/Documents/qvm-create-windows-qube"
 
 if ! qvm-check --running "$resources_qube" &> /dev/null; then
