@@ -187,9 +187,8 @@ fi
 
 # Resources qube
 if ! [ "$resources_qube" ]; then
-    echo -e "${RED}[!]${NC} Resource qube not specified"
-else
-  resources_qube="windows-mgmt"
+    resources_qube="windows-mgmt"
+    echo -e "${BLUE}[!]${NC} Resource qube not specified; Use default '${resources_qube}' "
 fi
 
 resources_dir="/home/user/Documents/qvm-create-windows-qube"
