@@ -109,7 +109,7 @@ scurl_file() {
             ;;
     esac
 
-    until wget --output-document="$out_file" --secure-protocol="$secure_protocol" --https-only "$url"; do
+    until wget --progress=bar:force --show-progress --output-document="$out_file" --secure-protocol="$secure_protocol" --https-only "$url"; do
         echo -e "${RED}[!]${NC} Failed to download Windows! Is there an Internet connection? Retrying in 10 seconds..." >&2
         sleep 10
     done
